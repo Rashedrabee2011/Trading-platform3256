@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>إنشاء حساب - تداول PAY</title>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            background: #0b0e14
+        }
+
+        .auth-wrapper {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 520px;
+            background: #0f1720;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 18px 60px rgba(2, 6, 11, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.03)
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 12px
+        }
+
+        .auth-logo h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #f5c542
+        }
+
+        .auth-sub {
+            color: #98a6b6;
+            font-size: 13px;
+            margin-top: 6px
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 999px;
+            border: 1px solid #182128;
+            background: #071017;
+            color: #e6eef6;
+            font-size: 15px;
+            height: 48px
+        }
+
+        .auth-label {
+            display: block;
+            color: #98a6b6;
+            margin-bottom: 8px
+        }
+
+        .auth-btn {
+            background: linear-gradient(90deg, #2ecc71, #26b06b);
+            border-radius: 999px;
+            padding: 12px 18px;
+            border: none;
+            color: #071017;
+            font-weight: 700;
+            height: 48px
+        }
+
+        .auth-ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            color: #98a6b6;
+            border-radius: 999px;
+            padding: 10px 14px;
+            text-decoration: none
+        }
+
+        .auth-error {
+            color: #e74c3c;
+            margin-top: 10px;
+            display: none
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <h2>إنشاء حساب</h2>
+                <div class="auth-sub">سجل حسابك خلال دقائق</div>
+            </div>
+            <div style="margin-top:8px;"><label class="auth-label">الاسم الكامل</label><input id="reg_fullName"
+                    class="auth-input"></div>
+            <div style="margin-top:8px;"><label class="auth-label">البريد الإلكتروني</label><input id="reg_email"
+                    class="auth-input" type="email"></div>
+            <div style="margin-top:8px;"><label class="auth-label">رقم الهاتف</label><input id="reg_phone"
+                    class="auth-input"></div>
+            <div style="margin-top:8px; position:relative;"><label class="auth-label">كلمة المرور</label><input
+                    id="reg_password" class="auth-input" type="password"><button id="regPwdToggle"
+                    style="position:absolute; inset-inline-start:12px; top:46px; background:none; border:none; color:#98a6b6;">إظهار</button>
+            </div>
+            <div style="margin-top:8px;"><label class="auth-label">تأكيد كلمة المرور</label><input id="reg_password2"
+                    class="auth-input" type="password"></div>
+            <div id="regMessage" class="auth-error"></div>
+            <div style="display:flex; gap:8px; margin-top:12px;"><button id="regBtn" class="auth-btn"
+                    style="flex:1;">إنشاء الحساب</button><a class="auth-ghost" href="/login.html">دخول</a></div>
+        </div>
+    </div>
+    <script src="/register.js" defer></script>
+</body>
+
+</html>

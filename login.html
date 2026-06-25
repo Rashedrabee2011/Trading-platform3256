@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>تسجيل الدخول - تداول PAY</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Dark theme matching main page */
+    .auth-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: #0b0e14
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: #0f1720;
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 18px 60px rgba(2, 6, 11, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.03)
+    }
+
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 12px
+    }
+
+    .auth-logo h1 {
+      margin: 0;
+      font-size: 26px;
+      color: #f5c542
+    }
+
+    .auth-sub {
+      color: #98a6b6;
+      font-size: 13px;
+      margin-top: 6px
+    }
+
+    .auth-field {
+      margin-top: 12px
+    }
+
+    .auth-label {
+      display: block;
+      font-size: 13px;
+      color: #98a6b6;
+      margin-bottom: 8px
+    }
+
+    /* make inputs pill-shaped and same height as button */
+    .auth-input {
+      width: 100%;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid #182128;
+      background: #071017;
+      color: #e6eef6;
+      font-size: 15px;
+      height: 48px;
+      box-sizing: border-box
+    }
+
+    .auth-input::placeholder {
+      color: #4b5963
+    }
+
+    .auth-input:focus {
+      outline: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) inset;
+      border-color: #f5c542
+    }
+
+    .auth-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px
+    }
+
+    .auth-btn {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(90deg, #2ecc71, #26b06b);
+      color: #071017;
+      height: 48px
+    }
+
+    .auth-ghost {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      color: #98a6b6;
+      border-radius: 999px;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .auth-small {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #98a6b6;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    .auth-error {
+      color: #e74c3c;
+      margin-top: 10px;
+      font-size: 14px;
+      display: none
+    }
+
+    @media(max-width:600px) {
+      .auth-card {
+        padding: 18px;
+        border-radius: 12px
+      }
+
+      .auth-logo h1 {
+        font-size: 22px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <h1>تداول <strong>PAY</strong></h1>
+        <div class="auth-sub">تسجيل دخول آمن وسريع</div>
+      </div>
+
+      <div class="auth-field">
+        <label class="auth-label">البريد الإلكتروني أو اسم المستخدم</label>
+        <input id="user_identifier" class="auth-input" autocomplete="username" placeholder="مثال: you@example.com">
+      </div>
+
+      <div class="auth-field" style="position:relative;">
+        <label class="auth-label">كلمة المرور</label>
+        <input id="user_password" class="auth-input" type="password" autocomplete="current-password"
+          placeholder="أدخل كلمة المرور">
+        <button id="pwdToggle"
+          style="position:absolute; inset-inline-start:10px; top:44px; background:none; border:none; color:#8899aa; cursor:pointer;">إظهار</button>
+      </div>
+
+      <div id="loginError" class="auth-error"></div>
+
+      <div class="auth-row">
+        <button id="loginBtn" class="auth-btn">دخول</button>
+      </div>
+
+      <div class="auth-small">
+        <a class="auth-ghost" href="/register.html">إنشاء حساب جديد</a>
+        <a class="auth-ghost" href="/">الصفحة الرئيسية</a>
+      </div>
+    </div>
+  </div>
+  <script src="/login.js" defer></script>
+</body>
+
+</html>

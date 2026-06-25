@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>لوحة التحكم - Admin</title>
+    <style>
+        body {
+            font-family: Segoe UI, sans-serif;
+            background: #0b0e14;
+            color: #e0e6ed;
+            padding: 20px
+        }
+
+        .card {
+            background: #0f1720;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            max-width: 1000px;
+            margin: 12px auto
+        }
+
+        .row {
+            display: flex;
+            gap: 12px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03)
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer
+        }
+
+        .btn-primary {
+            background: #2ecc71;
+            color: #071017
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>لوحة التحكم</h2>
+        <div style="margin-bottom:12px">
+            <form id="loginForm">
+                <input id="adminUser" placeholder="username" />
+                <input id="adminPass" placeholder="password" type="password" />
+                <button class="btn btn-primary" id="adminLogin">دخول</button>
+            </form>
+        </div>
+        <div id="adminArea" style="display:none">
+            <h3>المستخدمون</h3>
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>username</th>
+                        <th>role</th>
+                        <th>created</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <h3>المعاملات</h3>
+            <table id="txTable">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>type</th>
+                        <th>amount</th>
+                        <th>method</th>
+                        <th>status</th>
+                        <th>created</th>
+                        <th>actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div style="margin-top:12px"><button id="logout" class="btn">خروج</button></div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('adminLogin').addEventListener('click', async function (e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+            const res = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
+            if (res.ok) {
+                document.getElementById('adminArea').style.display = 'block';
+                loadAdmin();
+            } else alert('فشل');
+        });
+        async function loadAdmin() {
+            const users = await (await fetch('/api/admin/users')).json();
+            const tx = await (await fetch('/api/admin/transactions')).json();
+            const ut = document.querySelector('#usersTable tbody'); ut.innerHTML = '';
+            users.forEach(u => { const tr = document.createElement('tr'); tr.innerHTML = `<td>${u.id}</td><td>${u.username}</td><td>${u.role}</td><td>${new Date(u.created).toLocaleString()}</td>`; ut.appendChild(tr); });
+            const tt = document.querySelector('#txTable tbody'); tt.innerHTML = '';
+            tx.forEach(t => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${t.id}</td><td>${t.type || ''}</td><td>${t.amount || ''}</td><td>${t.method || ''}</td><td>${t.status || ''}</td><td>${new Date(t.created).toLocaleString()}</td><td><button class='btn-accept' data-id='${t.id}'>قبول</button> <button class='btn-reject' data-id='${t.id}'>رفض</button></td>`;
+                tt.appendChild(tr);
+            });
+
+            // wire up actions
+            document.querySelectorAll('.btn-accept').forEach(b => b.addEventListener('click', async () => {
+                const id = b.dataset.id;
+                await fetch(`/api/admin/transaction/${id}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'مكتمل' }) });
+                loadAdmin();
+            }));
+            document.querySelectorAll('.btn-reject').forEach(b => b.addEventListener('click', async () => {
+                const id = b.dataset.id;
+                await fetch(`/api/admin/transaction/${id}/status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status: 'مرفوض' }) });
+                loadAdmin();
+            }));
+        }
+        document.getElementById('logout').addEventListener('click', async () => {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            document.getElementById('adminArea').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

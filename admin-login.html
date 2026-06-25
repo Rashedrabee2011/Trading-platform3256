@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>تسجيل دخول الأدمن</title>
+    <style>
+        body {
+            font-family: Segoe UI, sans-serif;
+            background: #0b0e14;
+            color: #e0e6ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh
+        }
+
+        .card {
+            background: #0f1720;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            width: 360px
+        }
+
+        .field {
+            margin-bottom: 12px
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #182128;
+            background: #071017;
+            color: #e6eef6
+        }
+
+        .btn {
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: #2ecc71;
+            border: none;
+            color: #071017;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h3>تسجيل دخول الأدمن</h3>
+        <div class="field"><input id="u" placeholder="username"></div>
+        <div class="field"><input id="p" placeholder="password" type="password"></div>
+        <div><button id="b" class="btn">دخول</button></div>
+        <div id="err" style="color:#e74c3c;margin-top:8px;display:none"></div>
+    </div>
+    <script>
+        document.getElementById('b').addEventListener('click', async function () {
+            const u = document.getElementById('u').value;
+            const p = document.getElementById('p').value;
+            const res = await fetch('/api/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username: u, password: p }) });
+            if (res.ok) { location = '/admin'; return; }
+            document.getElementById('err').style.display = 'block'; document.getElementById('err').textContent = 'فشل الدخول';
+        });
+    </script>
+</body>
+
+</html>
